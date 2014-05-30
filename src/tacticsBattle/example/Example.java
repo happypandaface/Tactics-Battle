@@ -16,18 +16,28 @@ public class Example
     public static void main(String[] args)
 	{
 		Fight fight = new Fight();
-		Character guy = new Character();
-		guy.setName("jason");
-		guy.addType(FightObjectType.TYPE_COMMANDABLE);
-		fight.addFighter(guy);
 		{
-			Enemy orc = new Enemy();
-			orc.setName("orc");
-			fight.addFighter(orc);
+			Character guy = new Character();
+			guy.setName("jason");
+			guy.setPos(7, 7, 0);
+			guy.addType(FightObjectType.TYPE_COMMANDABLE);
+			fight.addFighter(guy);
 		}
 		{
+			Character guy = new Character();
+			guy.setName("beth");
+			guy.setPos(8, 4, 0);
+			guy.addType(FightObjectType.TYPE_COMMANDABLE);
+			fight.addFighter(guy);
+		}
+			Enemy orc1 = new Enemy();
+			orc1.setPos(5, 7, 0);
+			orc1.setName("orc");
+			fight.addFighter(orc1);
+		{
 			Enemy orc = new Enemy();
 			orc.setName("orc");
+			orc.setPos(5, 3, 0);
 			fight.addFighter(orc);
 		}
 		int i = 0;
@@ -56,11 +66,13 @@ public class Example
 					case "state":
 						for (FightObjectComp obj : fight.getObjs())
 						{
-							System.out.println(obj.getRelativeName());
+							System.out.println(obj.getRelativeName()+" at ("+obj.getX()+", "+obj.getY()+", "+obj.getZ()+")");
 						}
 						break;
 					case "go":
 						MoveCommand mc = new MoveCommand();
+						mc.setObj(commandObj);
+						mc.setTarget(orc1);
 						commandObj.executeCommand(mc);
 						break;
 					case "move":

@@ -4,6 +4,7 @@ import tacticsBattle.commands.FightCommandComp;
 import tacticsBattle.objects.FightObjectType;
 import tacticsBattle.util.Pos3Comp;
 import tacticsBattle.core.HasObjs;
+import tacticsBattle.core.HasCmds;
 
 public interface FightObjectComp
 {
@@ -30,5 +31,13 @@ public interface FightObjectComp
 	
 	public Pos3Comp getPos();
 	
+	public void setPos(float x, float y, float z);
+	
+	public void setPos(Pos3Comp p);
+	
+	public float getSize();
+	
 	public void setObjHolder(HasObjs ho);
+	
+	public void setCmdHolder(HasCmds ho);
 }

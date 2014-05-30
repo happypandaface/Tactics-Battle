@@ -5,18 +5,29 @@ import java.util.List;
 import java.util.Iterator;
 
 import tacticsBattle.objects.FightObjectComp;
+import tacticsBattle.commands.FightCommandComp;
 import tacticsBattle.objects.FightObjectType;
 
-public class Fight implements HasObjs
+public class Fight implements HasObjs, HasCmds
 {
 	List<FightObjectComp> objs;
+	List<FightCommandComp> cmds;
 	boolean needsCommand;
 	FightObjectComp currObjToCommand;
 	
 	public Fight()
 	{
 		objs = new ArrayList<FightObjectComp>();
+		cmds = new ArrayList<FightCommandComp>();
 		needsCommand = false;
+	}
+	
+	public void addCmd(FightCommandComp fcc)
+	{
+	}
+	
+	public void removeCmd(FightCommandComp fcc)
+	{
 	}
 	
 	public List<FightObjectComp> getObjs()
@@ -75,11 +86,13 @@ public class Fight implements HasObjs
 	{
 		objs.add(f);
 		f.setObjHolder(this);
+		f.setCmdHolder(this);
 	}
 	
 	public void removeFighter(FightObjectComp f)
 	{
 		objs.remove(f);
 		f.setObjHolder(null);
+		f.setCmdHolder(null);
 	}
 }

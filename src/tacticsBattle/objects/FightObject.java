@@ -4,6 +4,7 @@ import tacticsBattle.commands.FightCommandComp;
 import tacticsBattle.util.Pos3;
 import tacticsBattle.util.Pos3Comp;
 import tacticsBattle.core.HasObjs;
+import tacticsBattle.core.HasCmds;
 import java.util.EnumMap;
 
 public class FightObject implements FightObjectComp
@@ -13,15 +14,30 @@ public class FightObject implements FightObjectComp
 	Pos3 pos;
 	EnumMap<FightObjectType, Boolean> types;
 	HasObjs objHolder;
+	HasCmds cmdHolder;
+	float size;
+	FightCommandComp currentCommand = null;
 	
 	public FightObject()
 	{
+		size = 1;//default
+		pos = new Pos3();
 		types = new EnumMap<FightObjectType, Boolean>(FightObjectType.class);
+	}
+	
+	public float getSize()
+	{
+		return size;
 	}
 	
 	public void setObjHolder(HasObjs ho)
 	{
 		this.objHolder = ho;
+	}
+	
+	public void setCmdHolder(HasCmds co)
+	{
+		this.cmdHolder = co;
 	}
 	
 	public boolean checkType(FightObjectType type)
@@ -58,20 +74,34 @@ public class FightObject implements FightObjectComp
 		return pos;
 	}
 	
+	public void setPos(float x, float y, float z)
+	{
+		pos.set(x, y, z);
+	}
+	
+	public void setPos(Pos3Comp p)
+	{
+		pos.set(p);
+	}
+	
 	public float checkStopThisTurn(float delta)
 	{
-		this.timeTilCommand -= delta;
-		return this.timeTilCommand;
+		//this.timeTilCommand -= delta;
+		if (this.currentCommand == null)
+			return 0;
+		return this.currentCommand.checkStopThisTurn(delta);
 	}
 	
 	public void update(float delta)
 	{
-		
+		if (this.currentCommand == null)
+			return;
+		this.currentCommand.update(delta);
 	}
 	
-	public void executeCommand(FightCommandComp f)
+	public void executeCommand(FightCommandComp fcc)
 	{
-		this.timeTilCommand = 1000;
+		this.currentCommand = fcc;
 	}
 	public String getName()
 	{
